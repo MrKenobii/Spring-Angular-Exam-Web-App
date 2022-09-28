@@ -1,0 +1,43 @@
+<div class="bootstrap-wrapper">
+  <div class="container">
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-md-6 offset-md-3">
+          <div class="container text-center">
+            <img src="../../../assets/signup.png" alt="">
+          </div>
+          <h1 class="text-center">Register here!!</h1>
+          {{user | json}}
+          <form (ngSubmit)="formSubmit()">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Username</mat-label>
+                <input matInput placeholder="Enter username" [(ngModel)]="user.username" name="username">
+              </mat-form-field>
+               <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Password</mat-label>
+                <input type="password" matInput placeholder="Enter password" [(ngModel)]="user.password" name="password">
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>First Name</mat-label>
+                <input  matInput placeholder="Enter name" [(ngModel)]="user.firstName" name="firstName">
+              </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Last Name</mat-label>
+                <input  matInput placeholder="Enter last name" [(ngModel)]="user.lastName" name="lastName">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput placeholder="Enter email" [(ngModel)]="user.email" name="email">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Phone Number</mat-label>
+                <input type="number" matInput placeholder="Enter phone" [(ngModel)]="user.phone" name="phone">
+            </mat-form-field>
+            <div class="container text-center">
+              <button type="submit" mat-raised-button color="primary">Register</button>
+              <button mat-raised-button color="accent" style="margin-left: 20px">Clear</button>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>
+</div>
