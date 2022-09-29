@@ -13,6 +13,7 @@ import java.util.Set;
 
 @RestController()
 @RequestMapping("/api/v1/user")
+@CrossOrigin("*")
 public class UserController {
     private final UserService userService;
 
@@ -23,7 +24,8 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
-        System.out.println(user);
+
+        user.setProfile("default.png");
         Set<UserRole> userRoleSet = new HashSet<>();
         Role role = new Role();
         role.setRoleId(45L);
