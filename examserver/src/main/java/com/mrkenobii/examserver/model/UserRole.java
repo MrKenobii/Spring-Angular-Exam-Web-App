@@ -3,7 +3,7 @@ package com.mrkenobii.examserver.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "")
+@Table(name = "user_role")
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
