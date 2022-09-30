@@ -1,10 +1,13 @@
 package com.mrkenobii.examserver.controller;
 
+import com.mrkenobii.examserver.helper.UserNotFoundException;
 import com.mrkenobii.examserver.model.Role;
 import com.mrkenobii.examserver.model.User;
 import com.mrkenobii.examserver.model.UserRole;
 import com.mrkenobii.examserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -49,5 +52,9 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public String deleteUser(@PathVariable("userId") Long userId){
         return userService.deleteUser(userId);
+    }
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<?> exceptionHandler(UserNotFoundException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
