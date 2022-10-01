@@ -3,6 +3,7 @@ package com.mrkenobii.examserver.controller;
 import com.mrkenobii.examserver.config.JwtUtil;
 import com.mrkenobii.examserver.model.JwtRequest;
 import com.mrkenobii.examserver.model.JwtResponse;
+import com.mrkenobii.examserver.model.User;
 import com.mrkenobii.examserver.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -49,5 +52,10 @@ public class AuthenticationController {
         } catch (BadCredentialsException exception){
             throw new Exception("Invalid credentials " + exception.getMessage());
         }
+    }
+    @GetMapping("/current-user")
+    public User getCurrentUser(Principal principal){
+        return (User) this.userDetailsService.loadUserByUsername(principal.getName());
+
     }
 }
