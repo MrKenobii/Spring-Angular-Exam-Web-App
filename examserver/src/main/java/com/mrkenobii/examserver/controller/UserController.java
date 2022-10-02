@@ -8,6 +8,7 @@ import com.mrkenobii.examserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -19,16 +20,19 @@ import java.util.Set;
 @CrossOrigin("*")
 public class UserController {
     private final UserService userService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @PostMapping
     public User createUser(@RequestBody User user) {
 
         user.setProfile("default.png");
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Set<UserRole> userRoleSet = new HashSet<>();
         Role role = new Role();
         role.setRoleId(45L);
