@@ -1,5 +1,6 @@
 package com.mrkenobii.examserver.controller;
 
+import com.mrkenobii.examserver.helper.UserFoundException;
 import com.mrkenobii.examserver.helper.UserNotFoundException;
 import com.mrkenobii.examserver.model.Role;
 import com.mrkenobii.examserver.model.User;
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
+    public User createUser(@RequestBody User user) throws UserFoundException {
 
         user.setProfile("default.png");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -59,6 +60,10 @@ public class UserController {
     }
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> exceptionHandler(UserNotFoundException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(UserFoundException.class)
+    public ResponseEntity<?> exceptionHandler(UserFoundException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

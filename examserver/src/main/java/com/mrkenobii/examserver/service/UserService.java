@@ -1,5 +1,7 @@
 package com.mrkenobii.examserver.service;
 
+import com.mrkenobii.examserver.helper.UserFoundException;
+import com.mrkenobii.examserver.helper.UserNotFoundException;
 import com.mrkenobii.examserver.model.User;
 import com.mrkenobii.examserver.model.UserRole;
 import com.mrkenobii.examserver.repository.RoleRepository;
@@ -21,19 +23,13 @@ public class UserService {
         this.roleRepository = roleRepository;
     }
 
-    public User createUser(User user, Set<UserRole> userRoles){
-       /* User userLocal = userRepository.findByUsername(user.getUsername());
+    public User createUser(User user, Set<UserRole> userRoles) throws UserFoundException {
+        User userLocal = userRepository.findByUsername(user.getUsername());
         System.out.println("User:" + userLocal);
-        if(user != null) {
-            throw new RuntimeException("User already exists with username:" + user.getUsername());
+        if(userLocal != null) {
+            throw new UserFoundException("User already exists with username:" + user.getUsername());
         }
 
-
-        for(UserRole userRole: userRoles){
-            roleRepository.save(userRole.getRole());
-        }
-        user.getUserRoles().addAll(userRoles);
-        return userRepository.save(user);*/
         for(UserRole userRole: userRoles){
             roleRepository.save(userRole.getRole());
         }
