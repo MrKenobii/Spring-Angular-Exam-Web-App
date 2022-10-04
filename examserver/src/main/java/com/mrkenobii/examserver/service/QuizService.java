@@ -19,7 +19,15 @@ public class QuizService {
         return quizRepository.save(quiz);
     }
     public Quiz updateQuiz(Quiz quiz){
-        return quizRepository.save(quiz);
+        Quiz quiz1 = new Quiz();
+        quiz1.setDescription(quiz.getDescription());
+        quiz1.setTitle(quiz.getTitle());
+        quiz1.setCategory(quiz.getCategory());
+        quiz1.setActive(quiz.isActive());
+        quiz1.setQuestions(quiz.getQuestions());
+        quiz1.setMaxMarks(quiz.getMaxMarks());
+        quiz1.setNumberOfQuestions(quiz.getNumberOfQuestions());
+        return quizRepository.save(quiz1);
     }
     public Set<Quiz> getQuizzes(){
         return new LinkedHashSet<>(quizRepository.findAll());
