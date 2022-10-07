@@ -20,7 +20,8 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
     public Category updateCategory(Category category){
-        Category category1 = new Category();
+        Category category1 = categoryRepository.findById(category.getId())
+                .orElseThrow(RuntimeException::new);
         category1.setDescription(category.getDescription());
         category1.setTitle(category.getTitle());
         category1.setQuizzes(category.getQuizzes());
@@ -34,8 +35,6 @@ public class CategoryService {
                 .orElseThrow(RuntimeException::new);
     }
     public void deleteCategory(Long id){
-        Category category = new Category();
-        category.setId(id);
-        categoryRepository.delete(category);
+        categoryRepository.deleteById(id);
     }
 }

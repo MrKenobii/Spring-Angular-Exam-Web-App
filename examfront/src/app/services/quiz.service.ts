@@ -15,7 +15,14 @@ export class QuizService {
     return this.http.post(`${baseUrl}/quiz`, quiz);
   }
 
-  deleteQuiz(id: number) {
+  public deleteQuiz(id: number) {
     return this.http.delete(`${baseUrl}/quiz/${id}`);
   }
+  public getQuizById(id: number){
+    return this.http.get(`${baseUrl}/quiz/${id}`);
+  }
+  public updateQuiz(quiz: any){
+      return this.http.put(`${baseUrl}/quiz`, quiz);
+  }
+
 }

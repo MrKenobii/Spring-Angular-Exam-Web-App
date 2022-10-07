@@ -19,7 +19,7 @@ public class QuizService {
         return quizRepository.save(quiz);
     }
     public Quiz updateQuiz(Quiz quiz){
-        Quiz quiz1 = new Quiz();
+        Quiz quiz1 = quizRepository.findById(quiz.getId()).orElseThrow(RuntimeException::new);
         quiz1.setDescription(quiz.getDescription());
         quiz1.setTitle(quiz.getTitle());
         quiz1.setCategory(quiz.getCategory());

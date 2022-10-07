@@ -20,7 +20,10 @@ public class QuestionService {
         return questionRepository.save(question);
     }
     public Question updateQuestion(Question question){
-        Question question1 = new Question();
+//        Question question1 = new Question();
+
+        Question question1 = questionRepository.findById(question.getId())
+                .orElseThrow(RuntimeException::new);
         question1.setAnswer(question.getAnswer());
         question1.setContent(question.getContent());
         question1.setImage(question.getImage());
@@ -43,8 +46,6 @@ public class QuestionService {
         return questionRepository.findByQuiz(quiz);
     }
     public void deleteQuestionById(Long id){
-        Question question = new Question();
-        question.setId(id);
-        questionRepository.delete(question);
+        questionRepository.deleteById(id);
     }
 }
