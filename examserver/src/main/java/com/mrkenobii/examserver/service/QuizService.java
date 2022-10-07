@@ -37,9 +37,7 @@ public class QuizService {
                 .orElseThrow(RuntimeException::new);
     }
     public void deleteQuiz(Long id){
-        Quiz quiz = new Quiz();
-        quiz.setId(id);
-        quizRepository.delete(quiz);
+        quizRepository.deleteById(id);
     }
 
 }
