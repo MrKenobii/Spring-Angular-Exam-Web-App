@@ -16,6 +16,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/question")
+@CrossOrigin("*")
 public class QuestionController {
     private final QuestionService questionService;
     private final QuizService quizService;
@@ -33,17 +34,22 @@ public class QuestionController {
         return new ResponseEntity<>(questionService.updateQuestion(question), HttpStatus.OK);
     }
     @GetMapping("/quiz/{id}")
-    public ResponseEntity<List<Question>> getQuestionsOfQuiz(@PathVariable Long id){
-        /*Quiz quiz = new Quiz();
-        quiz.setId(id);
-        return new ResponseEntity<>(questionService.getQuestionsOfQuiz(quiz), HttpStatus.OK);*/
+    public ResponseEntity<?> getQuestionsOfQuiz(@PathVariable Long id){
         Quiz quizById = quizService.getQuizById(id);
         Set<Question> questions = quizById.getQuestions();
-        List<Question> list = new ArrayList<>(questions);
+
+        List list = new ArrayList(questions);
         if(list.size() > Integer.parseInt(quizById.getNumberOfQuestions()))
             list = list.subList(0, Integer.parseInt(quizById.getNumberOfQuestions()));
         Collections.shuffle(list);
         return ResponseEntity.ok(list);
+    }
+    @GetMapping("/quiz/all/{id}")
+    public ResponseEntity<?> getQuestionsOfQuizAdmin(@PathVariable Long id){
+        Quiz quiz = new Quiz();
+        quiz.setId(id);
+        return  ResponseEntity.ok(questionService.getQuestionsOfQuiz(quiz));
+        //return ResponseEntity.ok(list);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestionById(@PathVariable Long id){

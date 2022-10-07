@@ -10,7 +10,7 @@
     <p>{{q.description}}</p>
   </mat-card-content>
   <mat-card-actions>
-     <button mat-flat-button color="primary">Questions</button>
+     <button [routerLink]="'/admin/view-questions/'+ q.id +'/'+q.title" mat-flat-button color="primary">Questions</button>
      <button mat-stroked-button color="primary" class="ml20">Max. Marks: {{q.maxMarks}}</button>
      <button mat-stroked-button color="primary" class="ml20">Questions: {{q.numberOfQuestions}}</button>
      <button mat-flat-button color="primary" class="ml20" [routerLink]="'/admin/quiz/'+q.id">Update</button>
