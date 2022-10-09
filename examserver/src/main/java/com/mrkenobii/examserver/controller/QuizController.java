@@ -1,5 +1,6 @@
 package com.mrkenobii.examserver.controller;
 
+import com.mrkenobii.examserver.model.exam.Category;
 import com.mrkenobii.examserver.model.exam.Quiz;
 import com.mrkenobii.examserver.service.QuizService;
 import org.hibernate.annotations.Fetch;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -39,4 +41,17 @@ public class QuizController {
     public void deleteQuiz(@PathVariable Long id){
         quizService.deleteQuiz(id);
     }
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<Quiz>> getQuizzesOfCategory(@PathVariable Long id){
+        return new ResponseEntity<>(quizService.getQuizzesOfCategory(id), HttpStatus.OK);
+    }
+    @GetMapping("/active")
+    public ResponseEntity<List<Quiz>> getActiveQuizzes(){
+        return new ResponseEntity<>(quizService.getActiveQuizzes(), HttpStatus.OK);
+    }
+    @GetMapping("/category/active/{id}")
+    public ResponseEntity<List<Quiz>> getActiveQuizzesOfCategory(@PathVariable Long id){
+        return new ResponseEntity<>(quizService.getActiveQuizzesOfCategory(id), HttpStatus.OK);
+    }
+
 }
