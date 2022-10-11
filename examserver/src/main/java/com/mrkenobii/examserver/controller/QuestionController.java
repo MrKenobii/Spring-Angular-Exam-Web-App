@@ -9,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/question")
@@ -35,21 +32,11 @@ public class QuestionController {
     }
     @GetMapping("/quiz/{id}")
     public ResponseEntity<?> getQuestionsOfQuiz(@PathVariable Long id){
-        Quiz quizById = quizService.getQuizById(id);
-        Set<Question> questions = quizById.getQuestions();
-
-        List list = new ArrayList(questions);
-        if(list.size() > Integer.parseInt(quizById.getNumberOfQuestions()))
-            list = list.subList(0, Integer.parseInt(quizById.getNumberOfQuestions()));
-        Collections.shuffle(list);
-        return ResponseEntity.ok(list);
+        return new ResponseEntity<>(questionService.getQuestionsOfQuiz(id), HttpStatus.OK);
     }
     @GetMapping("/quiz/all/{id}")
     public ResponseEntity<?> getQuestionsOfQuizAdmin(@PathVariable Long id){
-        Quiz quiz = new Quiz();
-        quiz.setId(id);
-        return  ResponseEntity.ok(questionService.getQuestionsOfQuiz(quiz));
-        //return ResponseEntity.ok(list);
+        return  ResponseEntity.ok(questionService.getQuestionsOfAdmin(id));
     }
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestionById(@PathVariable Long id){
@@ -60,4 +47,8 @@ public class QuestionController {
         questionService.deleteQuestionById(id);
     }
 
+    @PostMapping("/eval-quiz")
+    public ResponseEntity<Map<String, Object>> evalQuiz(@RequestBody List<Question> questions){
+        return new ResponseEntity<>(questionService.evalQuiz(questions), HttpStatus.OK);
+    }
 }

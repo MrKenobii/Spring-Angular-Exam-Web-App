@@ -20,4 +20,7 @@ export class QuestionService {
   public deleteQuestion(id: number) {
     return this.http.delete(`${baseUrl}/question/${id}`);
   }
+  public evalQuiz(questions: any){
+    return this.http.post(`${baseUrl}/question/eval-quiz`,questions)
+  }
 }

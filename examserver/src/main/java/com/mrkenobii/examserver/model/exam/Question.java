@@ -1,5 +1,8 @@
 package com.mrkenobii.examserver.model.exam;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,13 +18,16 @@ public class Question {
     private String option3;
     private String option4;
     private String answer;
+    @Transient
+    private String givenAnswer;
     @ManyToOne(fetch = FetchType.EAGER)
     private Quiz quiz;
+
 
     public Question() {
     }
 
-    public Question(Long id, String content, String image, String option1, String option2, String option3, String option4, String answer, Quiz quiz) {
+    public Question(Long id, String content, String image, String option1, String option2, String option3, String option4, String answer, String givenAnswer, Quiz quiz) {
         this.id = id;
         this.content = content;
         this.image = image;
@@ -30,6 +36,7 @@ public class Question {
         this.option3 = option3;
         this.option4 = option4;
         this.answer = answer;
+        this.givenAnswer = givenAnswer;
         this.quiz = quiz;
     }
 
@@ -88,7 +95,6 @@ public class Question {
     public void setOption4(String option4) {
         this.option4 = option4;
     }
-
     public String getAnswer() {
         return answer;
     }
@@ -103,6 +109,14 @@ public class Question {
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
+    }
+
+    public String getGivenAnswer() {
+        return givenAnswer;
+    }
+
+    public void setGivenAnswer(String givenAnswer) {
+        this.givenAnswer = givenAnswer;
     }
 
     @Override

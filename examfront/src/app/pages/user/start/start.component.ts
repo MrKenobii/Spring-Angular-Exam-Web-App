@@ -69,23 +69,35 @@ export class StartComponent implements OnInit {
     }, 1000);
   }
   public getFormattedTime(): string{
-    console.log(this.timer);
     let mm= Math.floor(this.timer / 60);
     let ss=this.timer-mm*60;
     return `${mm} min :${ss}: sec `;
   }
 
   private evalQuiz(){
-    this.isSubmit=true;
-    this.questions.forEach((q: any) => {
-      if(q.givenAnswer===q.answer) {
-        this.correctAnswers++;
-        let marksSingle = (this.questions[0].quiz.maxMarks) / (this.questions.length);
-        this.marksGot += marksSingle;
-      }
-      if(q.givenAnswer.trim()!== ''){
-        this.attempted++;
-      }
+    this.questionService.evalQuiz(this.questions).subscribe((data: any) => {
+      console.log(data);
+      this.marksGot=parseFloat(Number(data.marksGot).toFixed(2));
+      this.correctAnswers=data.correctAnswers;
+      this.attempted=data.attempted;
+      this.isSubmit=true;
+    }, (error) => {
+      console.log(error);
     });
+    //this.isSubmit=true;
+    // this.questions.forEach((q: any) => {
+    //   if(q.givenAnswer===q.answer) {
+    //     this.correctAnswers++;
+    //     let marksSingle = (this.questions[0].quiz.maxMarks) / (this.questions.length);
+    //     this.marksGot += marksSingle;
+    //   }
+    //   if(q.givenAnswer.trim()!== ''){
+    //     this.attempted++;
+    //   }
+    // });
+  }
+
+  printPage() {
+    window.print();
   }
 }
